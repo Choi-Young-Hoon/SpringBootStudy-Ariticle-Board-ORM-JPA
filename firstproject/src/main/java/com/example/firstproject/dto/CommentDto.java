@@ -2,9 +2,11 @@ package com.example.firstproject.dto;
 
 import com.example.firstproject.entitiy.Article;
 import com.example.firstproject.entitiy.Comment;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CommentDto {
     private Long id;
+    @JsonProperty("article_id")
     private Long articleId;
     private String nickname;
     private String body;

@@ -1,8 +1,10 @@
 package com.example.firstproject.controller;
 
 import com.example.firstproject.dto.ArticleForm;
+import com.example.firstproject.dto.CommentDto;
 import com.example.firstproject.entitiy.Article;
 import com.example.firstproject.repository.ArticleRepository;
+import com.example.firstproject.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,8 @@ import java.util.Optional;
 public class ArticleController {
     @Autowired
     private ArticleRepository articleRepository;
+    @Autowired
+    private CommentService commentService;
 
 
     @GetMapping("/articles/new")
@@ -49,9 +53,11 @@ public class ArticleController {
         // 1. id를 조회해 데이터 가져오기
         //Optional<Article> article = articleRepository.findById(id);
         Article article = articleRepository.findById(id).orElse(null);
+        List<CommentDto> commentDtoList = commentService.comments(id);
 
         // 2. 모델에 데이터 등록하기
         model.addAttribute("article", article);
+        model.addAttribute("commentDtoList", commentDtoList);
 
         // 3. 뷰 페이지 반환하기
         return "/articles/show";
